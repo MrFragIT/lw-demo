@@ -1,17 +1,17 @@
 <div class="card mb-3">
     <div class="card-header">
-        Dell R210Intel Xeon X3440
+        {{server.model}}
     </div>
 
     <div class="card-body">
         <ul>
-            <li>RAM: 16GB DDR3</li>
-            <li>HDD: 2x 2TB SATA2</li>
-            <li>Location: AmsterdamAMS-01</li>
+            <li>RAM: {{server.ram.memory}}{{server.ram.unit}} {{server.ram.type}}</li>
+            <li>HDD: {{server.hdd.count}}x {{server.hdd.memory}}{{server.hdd.unit}} {{server.hdd.type}}</li>
+            <li>Location: {{server.location}}</li>
         </ul>
     </div>
 
     <div class="card-footer">
-        Price &euro; 4999
+        Price: {{server.price.amountCents | amountCents | currency:server.price.currency}}
     </div>
 </div>

@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Server} from '../../core/api/server/server.class';
 
 @Component({
     selector: 'app-server',
@@ -6,6 +7,7 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./server.component.scss']
 })
 export class ServerComponent implements OnInit {
+    @Input() server: Server;
 
     constructor() {
     }

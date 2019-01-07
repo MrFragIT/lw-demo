@@ -2,17 +2,20 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {Ng5SliderModule} from 'ng5-slider';
+import {AmountCentsPipe} from './pipes/amountCents/amountCents.pipe';
+
+const declareAndExport = [AmountCentsPipe];
+const importAndExport = [FormsModule, Ng5SliderModule];
 
 @NgModule({
-    declarations: [],
+    declarations: [...declareAndExport],
     imports: [
         CommonModule,
-        FormsModule,
-        Ng5SliderModule
+        ...importAndExport
     ],
     exports: [
-        FormsModule,
-        Ng5SliderModule
+        ...importAndExport,
+        ...declareAndExport
     ]
 })
 export class SharedModule {

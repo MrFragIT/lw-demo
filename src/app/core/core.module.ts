@@ -1,10 +1,14 @@
 import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {ServersApiService} from './api/server/servers-api.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [],
+    providers: [ServersApiService],
     imports: [
-        CommonModule
+        CommonModule,
+        HttpClientModule
     ]
 })
 export class CoreModule {

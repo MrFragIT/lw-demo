@@ -7,8 +7,8 @@ import {Options} from 'ng5-slider';
     styleUrls: ['./storage-filter.component.scss']
 })
 export class StorageFilterComponent implements OnInit {
-    minValue: number = 20;
-    maxValue: number = 80;
+    minValue = 20;
+    maxValue = 80;
     options: Options = {
         floor: 0,
         ceil: 100,
