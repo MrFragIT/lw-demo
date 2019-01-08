@@ -1,18 +1,24 @@
 import {Server} from '../../core/api/server/server.class';
 
 export interface ServerListState {
-    servers: Server[];
+    allServers: Server[];           // Unfiltered list of all fetched servers
+    allServersCount: number;        // Total number of servers available
+
+    visibleServers: Server[];       // Filtered list of servers, used by list component
+    visibleServersCount: number;    // NUmber of visible servers
+
     isLoading: boolean;
-    serversCount: number;
-    fiteredServersCount: number;
     errorMessage?: string;
 }
 
 export function initializeServerListState(): ServerListState {
     return {
-        servers: [],
+        allServers: [],
+        allServersCount: 0,
+
+        visibleServers: [],
+        visibleServersCount: 0,
+
         isLoading: true,
-        serversCount: 0,
-        fiteredServersCount: 0
     };
 }

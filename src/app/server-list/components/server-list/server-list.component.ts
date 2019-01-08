@@ -20,7 +20,7 @@ export class ServerListComponent implements OnInit {
     ngOnInit() {
         this.state$ = this.store.select(state => state['serverList']);
 
-        // Load servers
+        // Load allServers
         this.store.dispatch(new LoadServersAction());
     }
 }

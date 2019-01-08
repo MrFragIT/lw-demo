@@ -1,7 +1,6 @@
 import {initializeServerListState, ServerListState} from './server-list.state';
 import * as Actions from './server-list.action';
 import {ServerListActionTypes} from './server-list.action';
-import {Server} from '../../core/api/server/server.class';
 
 export function ServerListReducer(
     state: ServerListState = initializeServerListState(),
@@ -15,16 +14,19 @@ export function ServerListReducer(
             return initializeServerListState();
 
         /**
-         *  In case of success, populate servers array and related variables
+         *  In case of success, populate allServers. No filter is applied now
          */
         case ServerListActionTypes.LoadServersSuccess:
-            const servers = <Server[]>action.payload;
+            const servers = action.payload;
+            const serversCount = servers.length;
+
             return {
                 ...state,
-                servers,
+                allServers: servers,
+                allServersCount: serversCount,
+                visibleServers: servers,
+                visibleServersCount: serversCount,
                 isLoading: false,
-                serversCount: servers.length,
-                filteredServersCount: servers.length
             };
 
         /**
@@ -32,7 +34,6 @@ export function ServerListReducer(
          */
         case ServerListActionTypes.LoadServersFailure:
             return {
-                ...state,
                 isLoading: false,
                 errorMessage: action.payload.reason
             };

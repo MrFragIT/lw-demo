@@ -26,12 +26,13 @@
     </div>
 
     <div class="col-md-9">
-        <pre>{{ servers$ | async }}</pre>
+        <div class="text-right">You are watching {{(state$ | async).visibleServersCount}}
+            of {{(state$ | async).allServersCount}} servers found
+        </div>
         <app-server
-                *ngFor="let s of (state$ | async).servers"
+                *ngFor="let s of (state$ | async).visibleServers"
                 [server]="s"
         ></app-server>
-
     </div>
 </div>
 
