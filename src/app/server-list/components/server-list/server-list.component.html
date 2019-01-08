@@ -26,9 +26,9 @@
     </div>
 
     <div class="col-md-9">
-
+        <pre>{{ servers$ | async }}</pre>
         <app-server
-                *ngFor="let s of list$ | async"
+                *ngFor="let s of (state$ | async).servers"
                 [server]="s"
         ></app-server>
 
