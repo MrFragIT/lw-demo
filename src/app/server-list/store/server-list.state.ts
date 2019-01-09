@@ -7,7 +7,6 @@ export interface ServerListState {
     visibleServers: Server[];       // Filtered list of servers, used by list component
     visibleServersCount: number;    // NUmber of visible servers
 
-    isLoading: boolean;
     errorMessage?: string;
 }
 
@@ -18,7 +17,5 @@ export function initializeServerListState(): ServerListState {
 
         visibleServers: [],
         visibleServersCount: 0,
-
-        isLoading: true,
     };
 }

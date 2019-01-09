@@ -26,7 +26,6 @@ export function ServerListReducer(
                 allServersCount: serversCount,
                 visibleServers: servers,
                 visibleServersCount: serversCount,
-                isLoading: false,
             };
 
         /**
@@ -34,11 +33,31 @@ export function ServerListReducer(
          */
         case ServerListActionTypes.LoadServersFailure:
             return {
-                isLoading: false,
                 errorMessage: action.payload.reason
+            };
+
+        /**
+         * Filter by Storage
+         */
+        case ServerListActionTypes.FilterByStorage:
+            // TODO: Implement this filter!
+            return {
+                ...state
+            };
+
+        /**
+         * Filter by RAM
+         */
+        case ServerListActionTypes.FilterByRAM:
+            // const visibleServers = state.visibleServers.
+            return {
+                ...state
             };
 
         default:
             return state;
     }
 }
+
+
+

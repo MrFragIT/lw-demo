@@ -1,4 +1,5 @@
 import {ServerApiInterface} from './servers-api.interface';
+import {memorySizeToGB} from '../../memory-size-to-gb.enum';
 
 export class Server {
     readonly model: string;
@@ -39,5 +40,17 @@ export class Server {
             currencySymbol: apiResponse.price.currencySymbol,
             amountCents: +apiResponse.price.amountCents
         };
+    }
+
+    /**
+     * Return the total amount of GB of storage available.
+     */
+    getTotalStorageGB(): number {
+        // Check if multiplier is available
+        if (!memorySizeToGB[this.hdd.unit]) {
+            throw new Error(`Unknown HDD unit ${this.hdd.unit}`);
+        }
+
+        return this.hdd.memory * memorySizeToGB[this.hdd.unit] * this.hdd.count;
     }
 }
