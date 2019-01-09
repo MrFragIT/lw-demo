@@ -18,14 +18,23 @@ export function ServerListReducer(
          */
         case ServerListActionTypes.LoadServersSuccess:
             const servers = action.payload;
-            const serversCount = servers.length;
-
+            const filtersOptions = {
+                storage: servers.getStorageFilterOptions(),
+                ram: servers.getRAMFilterOptions(),
+                hdd: servers.getHDDFilterOptions(),
+                location: servers.getLocationFilterOptions()
+            };
             return {
-                ...state,
-                allServers: servers,
-                allServersCount: serversCount,
-                visibleServers: servers,
-                visibleServersCount: serversCount,
+                servers: servers,
+                serversCount: servers.length,
+                filteredServersCount: servers.length,
+                filtersOptions,
+                filtersValues: {
+                    storage: {
+                        min: filtersOptions.storage[0],
+                        max: filtersOptions.storage[filtersOptions.storage.length - 1]
+                    }
+                }
             };
 
         /**
@@ -41,42 +50,68 @@ export function ServerListReducer(
          * Filter by Storage
          */
         case ServerListActionTypes.FilterByStorage:
-            // TODO: Implement this filter!
+            state.servers.applyFilters(state.filtersValues);
             return {
-                ...state
+                ...state,
+                filteredServersCount: state.servers.length,
+                filtersValues: {
+                    ...state.filtersValues,
+                    storage: {
+                        min: action.payload.min,
+                        max: action.payload.max
+                    }
+                }
             };
 
         /**
          * Filter by RAM
          */
         case ServerListActionTypes.FilterByRAM:
-            // TODO: Implement this filter!
+            state.servers.applyFilters(state.filtersValues);
             return {
-                ...state
+                ...state,
+                filteredServersCount: state.servers.length,
+                filtersValues: {
+                    ...state.filtersValues,
+                    ram: {
+                        memory: action.payload.memory
+                    }
+                }
             };
 
         /**
          * Filter by HDD
          */
         case ServerListActionTypes.FilterByHDD:
-            // TODO: Implement this filter!
+            state.servers.applyFilters(state.filtersValues);
             return {
-                ...state
+                ...state,
+                filteredServersCount: state.servers.length,
+                filtersValues: {
+                    ...state.filtersValues,
+                    hdd: {
+                        type: action.payload.type
+                    }
+                }
             };
 
         /**
          * Filter by location
          */
         case ServerListActionTypes.FilterByLocation:
-            // TODO: Implement this filter!
+            state.servers.applyFilters(state.filtersValues);
             return {
-                ...state
+                ...state,
+                filteredServersCount: state.servers.length,
+                filtersValues: {
+                    ...state.filtersValues,
+                    location: {
+                        location: action.payload.location
+                    }
+                }
             };
 
         default:
             return state;
     }
 }
-
-
-

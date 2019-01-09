@@ -1,21 +1,23 @@
-import {ServerCollection} from '../../core/api/server/server-collection.class';
+import {ApplyFiltersParameters, ServerCollection} from '../../core/api/server/server-collection.class';
 
 export interface ServerListState {
-    allServers: ServerCollection;           // Unfiltered list of all fetched servers
-    allServersCount: number;                // Total number of servers available
-
-    visibleServers: ServerCollection;       // Filtered list of servers, used by list component
-    visibleServersCount: number;            // NUmber of visible servers
-
-    errorMessage?: string;
+    servers: ServerCollection;              // Collection of servers
+    serversCount: number;                   // Number of servers available
+    filteredServersCount: number;           // Number of visible servers
+    filtersOptions?: {                      // Possible options for filters
+        storage: number[];
+        ram: number[];
+        hdd: string[];
+        location: string[];
+    };
+    filtersValues?: ApplyFiltersParameters; // Object containing the state of applied filters;
+    errorMessage?: string;                  // If set, something bad has happened
 }
 
 export function initializeServerListState(): ServerListState {
     return {
-        allServers: null,
-        allServersCount: 0,
-
-        visibleServers: null,
-        visibleServersCount: 0,
+        servers: null,
+        serversCount: 0,
+        filteredServersCount: 0
     };
 }
