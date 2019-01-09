@@ -8,7 +8,7 @@ export enum ServerListActionTypes {
     FilterByStorage = '[ServerList] Filter by storage',
     FilterByRAM = '[ServerList] Filter by RAM',
     FilterByHDD = '[ServerList] Filter by HDD',
-    FilterByLocation = '[ServerList] Filter by location',
+    FilterByLocation = '[ServerList] Filter by Location',
 }
 
 export class LoadServersAction implements Action {
@@ -36,14 +36,14 @@ export class FilterByStorage implements Action {
     }
 }
 
-export class FilterByRAM implements Action {
+export class FilterByRam implements Action {
     readonly type = ServerListActionTypes.FilterByRAM;
 
     constructor(public payload: { memory: number[] }) {
     }
 }
 
-export class FilterByHDD implements Action {
+export class FilterByHdd implements Action {
     readonly type = ServerListActionTypes.FilterByHDD;
 
     constructor(public payload: { type: string }) {
@@ -62,6 +62,6 @@ export type Union =
     | LoadServersSuccessAction
     | LoadServersFailureAction
     | FilterByStorage
-    | FilterByRAM
-    | FilterByHDD
+    | FilterByRam
+    | FilterByHdd
     | FilterByLocation;

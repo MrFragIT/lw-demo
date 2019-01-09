@@ -82,23 +82,24 @@ export function ServerListReducer(
         /**
          * Filter by HDD
          */
-        case ServerListActionTypes.FilterByHDD:
-            state.servers.reset().applyFilters(state.filtersValues);
+        case ServerListActionTypes.FilterByHDD: {
+            const newFiltersValues = {
+                ...state.filtersValues,
+                hdd: action.payload.type
+            };
+            state.servers.reset().applyFilters(newFiltersValues);
             return {
                 ...state,
                 filteredServersCount: state.servers.length,
-                filtersValues: {
-                    ...state.filtersValues,
-                    hdd: {
-                        type: action.payload.type
-                    }
-                }
+                filtersValues: newFiltersValues
             };
+        }
+
 
         /**
          * Filter by location
          */
-        case ServerListActionTypes.FilterByLocation:
+        case ServerListActionTypes.FilterByLocation: {
             const newFiltersValues = {
                 ...state.filtersValues,
                 location: action.payload.location
@@ -109,6 +110,7 @@ export function ServerListReducer(
                 filteredServersCount: state.servers.length,
                 filtersValues: newFiltersValues
             };
+        }
 
         default:
             return state;

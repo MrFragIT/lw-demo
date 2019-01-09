@@ -1,5 +1,13 @@
-<select class="form-control">
-    <option>SAS</option>
-    <option>SATA</option>
-    <option>SSD</option>
-</select>
+<ng-container *ngIf="(state$ | async) as viewState">
+
+    <select (change)="applyFilter($event.target.value)" class="form-control">
+        <option value="">Every type</option>
+        <option
+                *ngFor="let o of viewState.options"
+                [selected]="o === viewState.selected"
+                [value]="o"
+        >{{o}}</option>
+    </select>
+
+</ng-container>
+
