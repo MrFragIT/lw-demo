@@ -99,16 +99,15 @@ export function ServerListReducer(
          * Filter by location
          */
         case ServerListActionTypes.FilterByLocation:
-            state.servers.reset().applyFilters(state.filtersValues);
+            const newFiltersValues = {
+                ...state.filtersValues,
+                location: action.payload.location
+            };
+            state.servers.reset().applyFilters(newFiltersValues);
             return {
                 ...state,
                 filteredServersCount: state.servers.length,
-                filtersValues: {
-                    ...state.filtersValues,
-                    location: {
-                        location: action.payload.location
-                    }
-                }
+                filtersValues: newFiltersValues
             };
 
         default:

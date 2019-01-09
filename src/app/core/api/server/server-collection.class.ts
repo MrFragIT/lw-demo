@@ -80,7 +80,7 @@ export class ServerCollection {
     applyStorageFilter(min: number, max: number) {
         this._servers = this._servers.filter(s => {
             const totalStorage = s.getTotalStorageGB();
-            return (min >= totalStorage) && (max <= totalStorage);
+            return (totalStorage >= min) && (totalStorage <= max);
         });
     }
 

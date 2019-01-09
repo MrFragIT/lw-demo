@@ -1,8 +1,13 @@
-<select class="form-control">
-    <option>Loc 1</option>
-    <option>Loc 2</option>
-    <option>Loc 3</option>
-    <option>Loc 4</option>
-    <option>Loc 5</option>
-    <option>Loc 6</option>
-</select>
+<ng-container *ngIf="(state$ | async) as viewState">
+
+    <select (change)="applyFilter($event.target.value)" class="form-control">
+        <option value="">Every location</option>
+        <option
+                *ngFor="let o of viewState.options"
+                [selected]="o === viewState.selected"
+                [value]="o"
+        >{{o}}</option>
+    </select>
+
+</ng-container>
+
