@@ -1,0 +1,35 @@
+<form *ngIf="ready" [formGroup]="filtersForm">
+    <div class="filter-container">
+        <h4>Storage</h4>
+
+    </div>
+
+    <div class="filter-container">
+        <h4>RAM</h4>
+
+    </div>
+
+    <div class="filter-container">
+        <label for="hdd">HDD</label>
+        <select class="form-control" formControlName="hdd" id="hdd">
+            <option [ngValue]="null">Every type</option>
+            <option
+                    *ngFor="let l of options.hdd"
+                    [ngValue]="l"
+            >{{l}}</option>
+        </select>
+    </div>
+
+    <div class="filter-container">
+        <label for="location">Location</label>
+        <select class="form-control" formControlName="location" id="location">
+            <option [ngValue]="null">Every location</option>
+            <option
+                    *ngFor="let l of options.location"
+                    [ngValue]="l"
+            >{{l}}</option>
+        </select>
+    </div>
+
+</form>
+

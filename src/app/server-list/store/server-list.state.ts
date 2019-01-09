@@ -4,14 +4,16 @@ export interface ServerListState {
     servers: ServerCollection;              // Collection of servers
     serversCount: number;                   // Number of servers available
     filteredServersCount: number;           // Number of visible servers
-    filtersOptions?: {                      // Possible options for filters
-        storage: number[];
-        ram: number[];
-        hdd: string[];
-        location: string[];
-    };
+    filtersOptions?: FiltersOptions;        // Possible options for filters
     filtersValues?: ApplyFiltersParameters; // Object containing the state of applied filters;
     errorMessage?: string;                  // If set, something bad has happened
+}
+
+export interface FiltersOptions {
+    storage: number[];
+    ram: number[];
+    hdd: string[];
+    location: string[];
 }
 
 export function initializeServerListState(): ServerListState {

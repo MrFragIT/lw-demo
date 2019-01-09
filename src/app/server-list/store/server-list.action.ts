@@ -1,14 +1,11 @@
 import {Action} from '@ngrx/store';
-import {ServerCollection} from '../../core/api/server/server-collection.class';
+import {ApplyFiltersParameters, ServerCollection} from '../../core/api/server/server-collection.class';
 
 export enum ServerListActionTypes {
     LoadServers = '[ServerList] Load Servers',
     LoadServersSuccess = '[ServerList] Load Servers Success',
     LoadServersFailure = '[ServerList] Load Servers Failure',
-    FilterByStorage = '[ServerList] Filter by storage',
-    FilterByRAM = '[ServerList] Filter by RAM',
-    FilterByHDD = '[ServerList] Filter by HDD',
-    FilterByLocation = '[ServerList] Filter by Location',
+    ApplyFilters = '[ServerList] Apply Filters'
 }
 
 export class LoadServersAction implements Action {
@@ -29,31 +26,10 @@ export class LoadServersFailureAction implements Action {
     }
 }
 
-export class FilterByStorage implements Action {
-    readonly type = ServerListActionTypes.FilterByStorage;
+export class ApplyFilters implements Action {
+    readonly type = ServerListActionTypes.ApplyFilters;
 
-    constructor(public payload: { min: number, max: number }) {
-    }
-}
-
-export class FilterByRam implements Action {
-    readonly type = ServerListActionTypes.FilterByRAM;
-
-    constructor(public payload: { memory: number[] }) {
-    }
-}
-
-export class FilterByHdd implements Action {
-    readonly type = ServerListActionTypes.FilterByHDD;
-
-    constructor(public payload: { type: string }) {
-    }
-}
-
-export class FilterByLocation implements Action {
-    readonly type = ServerListActionTypes.FilterByLocation;
-
-    constructor(public payload: { location: string }) {
+    constructor(public payload: ApplyFiltersParameters) {
     }
 }
 
@@ -61,7 +37,4 @@ export type Union =
     LoadServersAction
     | LoadServersSuccessAction
     | LoadServersFailureAction
-    | FilterByStorage
-    | FilterByRam
-    | FilterByHdd
-    | FilterByLocation;
+    | ApplyFilters;

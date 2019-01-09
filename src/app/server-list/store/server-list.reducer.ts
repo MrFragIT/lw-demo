@@ -47,68 +47,14 @@ export function ServerListReducer(
             };
 
         /**
-         * Filter by Storage
+         * Apply Filters
          */
-        case ServerListActionTypes.FilterByStorage:
-            state.servers.reset().applyFilters(state.filtersValues);
+        case ServerListActionTypes.ApplyFilters: {
+            state.servers.reset().applyFilters(action.payload);
             return {
                 ...state,
                 filteredServersCount: state.servers.length,
-                filtersValues: {
-                    ...state.filtersValues,
-                    storage: {
-                        min: action.payload.min,
-                        max: action.payload.max
-                    }
-                }
-            };
-
-        /**
-         * Filter by RAM
-         */
-        case ServerListActionTypes.FilterByRAM:
-            state.servers.reset().applyFilters(state.filtersValues);
-            return {
-                ...state,
-                filteredServersCount: state.servers.length,
-                filtersValues: {
-                    ...state.filtersValues,
-                    ram: {
-                        memory: action.payload.memory
-                    }
-                }
-            };
-
-        /**
-         * Filter by HDD
-         */
-        case ServerListActionTypes.FilterByHDD: {
-            const newFiltersValues = {
-                ...state.filtersValues,
-                hdd: action.payload.type
-            };
-            state.servers.reset().applyFilters(newFiltersValues);
-            return {
-                ...state,
-                filteredServersCount: state.servers.length,
-                filtersValues: newFiltersValues
-            };
-        }
-
-
-        /**
-         * Filter by location
-         */
-        case ServerListActionTypes.FilterByLocation: {
-            const newFiltersValues = {
-                ...state.filtersValues,
-                location: action.payload.location
-            };
-            state.servers.reset().applyFilters(newFiltersValues);
-            return {
-                ...state,
-                filteredServersCount: state.servers.length,
-                filtersValues: newFiltersValues
+                filtersValues: action.payload
             };
         }
 
