@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {Server} from '../../core/api/server/server.class';
+import {ServerCollection} from '../../core/api/server/server-collection.class';
 
 export enum ServerListActionTypes {
     LoadServers = '[ServerList] Load Servers',
@@ -18,7 +18,7 @@ export class LoadServersAction implements Action {
 export class LoadServersSuccessAction implements Action {
     readonly type = ServerListActionTypes.LoadServersSuccess;
 
-    constructor(public payload: Server[]) {
+    constructor(public payload: ServerCollection) {
     }
 }
 

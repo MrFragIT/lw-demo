@@ -5,6 +5,7 @@ import {Server} from './server.class';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {ApiService} from '../api.service';
+import {ServerCollection} from './server-collection.class';
 
 @Injectable({
     providedIn: 'root'
@@ -16,9 +17,12 @@ export class ServersApiService extends ApiService {
         super();
     }
 
-    getServers(): Observable<Server[]> {
+    /**
+     * Fetch server from remote API, returns ServerCollection instance
+     */
+    getServers(): Observable<ServerCollection> {
         return this.http.get<GetServerApiResponseInterface>(this.getEndpoint('servers')).pipe(
-            map(({servers}) => servers.map((s: ServerApiInterface) => new Server(s)))
+            map(({servers}) => new ServerCollection(servers.map((s: ServerApiInterface) => new Server(s))))
         );
     }
 }

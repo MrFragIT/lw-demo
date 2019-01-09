@@ -32,6 +32,7 @@ export function ServerListReducer(
          * In case of error, add errorMessage attribute
          */
         case ServerListActionTypes.LoadServersFailure:
+            // TODO: Implement me please!
             return {
                 errorMessage: action.payload.reason
             };
@@ -49,7 +50,25 @@ export function ServerListReducer(
          * Filter by RAM
          */
         case ServerListActionTypes.FilterByRAM:
-            // const visibleServers = state.visibleServers.
+            // TODO: Implement this filter!
+            return {
+                ...state
+            };
+
+        /**
+         * Filter by HDD
+         */
+        case ServerListActionTypes.FilterByHDD:
+            // TODO: Implement this filter!
+            return {
+                ...state
+            };
+
+        /**
+         * Filter by location
+         */
+        case ServerListActionTypes.FilterByLocation:
+            // TODO: Implement this filter!
             return {
                 ...state
             };

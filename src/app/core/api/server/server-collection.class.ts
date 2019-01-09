@@ -1,7 +1,7 @@
 import {Server} from './server.class';
 
 export class ServerCollection {
-    constructor(servers: Server[]) {
+    constructor(servers: Server[] = []) {
         this._servers = servers;
     }
 
@@ -9,6 +9,10 @@ export class ServerCollection {
 
     get servers(): Server[] {
         return this._servers;
+    }
+
+    get length(): number {
+        return this._servers.length;
     }
 
     filterByStorage(minGB: number, maxGB: number): ServerCollection {
