@@ -26,12 +26,12 @@
     </div>
 
     <div class="col-md-9">
-        <ng-container *ngIf="(state$ | async).visibleServers">
-            <div class="text-right">You are watching {{(state$ | async).visibleServersCount}}
-                of {{(state$ | async).allServersCount}} servers found.
+        <ng-container *ngIf="(state$ | async).servers">
+            <div class="text-right">You are watching {{(state$ | async).serversCount}}
+                of {{(state$ | async).filteredServersCount}} servers found.
             </div>
             <app-server
-                    *ngFor="let s of (state$ | async).visibleServers.servers"
+                    *ngFor="let s of (state$ | async).servers.servers"
                     [server]="s"
             ></app-server>
         </ng-container>

@@ -35,13 +35,17 @@ export class ServerCollection {
 
     /**
      * Restore the initial state of the collection
+     * this is returned to allow chaining
      */
-    reset() {
+    reset(): ServerCollection {
         this._servers = this._initServers;
+        return this;
     }
 
+    /**
+     *  Helper function to apply many filters in a single call
+     */
     applyFilters(params: ApplyFiltersParameters) {
-        this.reset();
         if (params.storage) {
             this.applyStorageFilter(params.storage.min, params.storage.max);
         }
@@ -67,7 +71,7 @@ export class ServerCollection {
                 acc.push(v);
             }
             return acc;
-        }, []).sort();
+        }, []).sort((a, b) => a - b);
     }
 
     /**
@@ -90,7 +94,7 @@ export class ServerCollection {
                 acc.push(v);
             }
             return acc;
-        }, []).sort();
+        }, []).sort((a, b) => a - b);
     }
 
     /**

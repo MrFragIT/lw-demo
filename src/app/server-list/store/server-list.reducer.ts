@@ -50,7 +50,7 @@ export function ServerListReducer(
          * Filter by Storage
          */
         case ServerListActionTypes.FilterByStorage:
-            state.servers.applyFilters(state.filtersValues);
+            state.servers.reset().applyFilters(state.filtersValues);
             return {
                 ...state,
                 filteredServersCount: state.servers.length,
@@ -67,7 +67,7 @@ export function ServerListReducer(
          * Filter by RAM
          */
         case ServerListActionTypes.FilterByRAM:
-            state.servers.applyFilters(state.filtersValues);
+            state.servers.reset().applyFilters(state.filtersValues);
             return {
                 ...state,
                 filteredServersCount: state.servers.length,
@@ -83,7 +83,7 @@ export function ServerListReducer(
          * Filter by HDD
          */
         case ServerListActionTypes.FilterByHDD:
-            state.servers.applyFilters(state.filtersValues);
+            state.servers.reset().applyFilters(state.filtersValues);
             return {
                 ...state,
                 filteredServersCount: state.servers.length,
@@ -99,7 +99,7 @@ export function ServerListReducer(
          * Filter by location
          */
         case ServerListActionTypes.FilterByLocation:
-            state.servers.applyFilters(state.filtersValues);
+            state.servers.reset().applyFilters(state.filtersValues);
             return {
                 ...state,
                 filteredServersCount: state.servers.length,
