@@ -1,21 +1,26 @@
 <div class="row">
     <div class="col-md-3">
-
         <div class="sticky-top">
             <app-server-filters></app-server-filters>
         </div>
-
     </div>
 
     <div class="col-md-9">
-        <ng-container *ngIf="(state$ | async).servers">
-            <div class="text-right">You are watching {{(state$ | async).filteredServersCount}}
-                of {{(state$ | async).serversCount}} servers found.
-            </div>
-            <app-server
-                    *ngFor="let s of (state$ | async).servers.servers"
-                    [server]="s"
-            ></app-server>
+        <ng-container *ngIf="(state$ | async).servers;">
+            <ng-container *ngIf="(state$ | async).filteredServersCount; else noResults">
+                <div class="text-right">You are watching {{(state$ | async).filteredServersCount}}
+                    of {{(state$ | async).serversCount}} servers found.
+                </div>
+                <app-server
+                        *ngFor="let s of (state$ | async).servers.servers"
+                        [server]="s"
+                ></app-server>
+            </ng-container>
+            <ng-template #noResults>
+                <div class="">
+                    Sorry! No results matching your filter.
+                </div>
+            </ng-template>
         </ng-container>
     </div>
 </div>

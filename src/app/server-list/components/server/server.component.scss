@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  margin-bottom: 1rem;
+  background-color: #F2F2F2;
+  padding: 0.8rem 1.2rem;
+  color: #444444;
+
+  &:hover {
+    background-color: #FFFFFF;
+  }
+}
+
+.model {
+  font-size: 1.2rem;
+  color: black;
+}
+
+.price {
+  font-size: 1.8rem;
+  margin-top: auto;
+  margin-bottom: auto;
+}

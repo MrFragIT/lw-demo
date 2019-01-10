@@ -8,6 +8,14 @@ import {ServerListReducer} from './store/server-list.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import {ServerListEffects} from './store/server-list.effects';
 import {ServerFiltersComponent} from './components/server-filters/server-filters.component';
+import {RouterModule, Routes} from '@angular/router';
+
+const routes: Routes = [
+    {
+        path: '',
+        component: ServerListComponent,
+    }
+];
 
 @NgModule({
     declarations: [
@@ -19,12 +27,9 @@ import {ServerFiltersComponent} from './components/server-filters/server-filters
         CommonModule,
         SharedModule,
         StoreModule.forFeature('serverList', ServerListReducer),
-        EffectsModule.forFeature([ServerListEffects])
+        EffectsModule.forFeature([ServerListEffects]),
+        RouterModule.forChild(routes)
     ],
-    // TODO: Remove this export and implement lazy loading!
-    exports: [
-        ServerListComponent
-    ]
 })
 export class ServerListModule {
 }

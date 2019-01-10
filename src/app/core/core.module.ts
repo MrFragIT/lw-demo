@@ -2,13 +2,19 @@ import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ServersApiService} from './api/server/servers-api.service';
 import {HttpClientModule} from '@angular/common/http';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
-    declarations: [],
+    declarations: [PageNotFoundComponent],
     providers: [ServersApiService],
     imports: [
         CommonModule,
+        RouterModule,
         HttpClientModule
+    ],
+    exports: [
+        PageNotFoundComponent
     ]
 })
 export class CoreModule {

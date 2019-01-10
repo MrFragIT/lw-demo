@@ -1,17 +1,19 @@
-<div class="card mb-3">
-    <div class="card-header">
-        {{server.model}}
+<div class="row">
+    <div class="col-md-9">
+        <div class="model">{{server.model}}</div>
+        <div class="row">
+            <div class="col-md-4">
+                {{server.ram.memory}}{{server.ram.unit}} {{server.ram.type}}
+            </div>
+            <div class="col-md-4">
+                {{server.hdd.count}}x {{server.hdd.memory}}{{server.hdd.unit}} {{server.hdd.type}}
+            </div>
+            <div class="col-md-4">
+                {{server.location}}
+            </div>
+        </div>
     </div>
-
-    <div class="card-body">
-        <ul>
-            <li>RAM: {{server.ram.memory}}{{server.ram.unit}} {{server.ram.type}}</li>
-            <li>HDD: {{server.hdd.count}}x {{server.hdd.memory}}{{server.hdd.unit}} {{server.hdd.type}}</li>
-            <li>Location: {{server.location}}</li>
-        </ul>
-    </div>
-
-    <div class="card-footer">
-        Price: {{server.price.amountCents | amountCents | currency:server.price.currency}}
+    <div class="col-md-3 text-right price">
+        {{server.price.amountCents | amountCents | currency:server.price.currency}}
     </div>
 </div>

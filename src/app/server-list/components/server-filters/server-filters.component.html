@@ -1,11 +1,11 @@
 <form *ngIf="ready" [formGroup]="filtersForm">
     <div class="filter-container">
-        <div class="filterName">Storage</div>
+        <div class="filter-name">Storage</div>
         <ng5-slider [options]="sliderOptions" formControlName="storage"></ng5-slider>
     </div>
 
     <div class="filter-container">
-        <div class="filterName">RAM</div>
+        <div class="filter-name">RAM</div>
         <div *ngFor="let size of filtersForm.get('ram').controls; let i = index;"
              class="form-check"
              formArrayName="ram"
@@ -18,7 +18,7 @@
     </div>
 
     <div class="filter-container">
-        <div class="filterName">HDD</div>
+        <div class="filter-name">HDD</div>
         <select class="form-control" formControlName="hdd">
             <option [ngValue]="null">Every type</option>
             <option
@@ -29,7 +29,7 @@
     </div>
 
     <div class="filter-container">
-        <div class="filterName">Location</div>
+        <div class="filter-name">Location</div>
         <select class="form-control" formControlName="location">
             <option [ngValue]="null">Every location</option>
             <option
