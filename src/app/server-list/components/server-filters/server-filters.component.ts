@@ -1,11 +1,29 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {FiltersOptions, ServerListState} from '../../store/server-list.state';
-
+import {CustomStepDefinition, Options} from 'ng5-slider';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {filter, take} from 'rxjs/operators';
 import {ApplyFilters} from '../../store/server-list.action';
 import {ApplyFiltersParameters} from '../../../core/api/server/server-collection.class';
+
+/**
+ * Allowed steps for storage slider
+ */
+const stepsArray: CustomStepDefinition[] = [
+    {value: 0, legend: '0'},
+    {value: 250, legend: '250GB'},
+    {value: 500, legend: '500GB'},
+    {value: 1024, legend: '1TB'},
+    {value: 2048, legend: '2TB'},
+    {value: 3072, legend: '3TB'},
+    {value: 4096, legend: '4TB'},
+    {value: 8192, legend: '8TB'},
+    {value: 12288, legend: '12TB'},
+    {value: 24576, legend: '24TB'},
+    {value: 49152, legend: '48TB'},
+    {value: 73728, legend: '72TB'},
+];
 
 @Component({
     selector: 'app-server-filters',
@@ -15,7 +33,13 @@ import {ApplyFiltersParameters} from '../../../core/api/server/server-collection
 export class ServerFiltersComponent implements OnInit {
     ready = false;
     filtersForm: FormGroup;
-    options: FiltersOptions;
+    filtersOptions: FiltersOptions;
+    sliderOptions: Options = {
+        stepsArray,
+        floor: 0,
+        ceil: 73728,
+        translate: (gb: number) => stepsArray.find((def) => def.value === gb).legend
+    };
 
     constructor(
         private store: Store<ServerListState>,
@@ -24,19 +48,48 @@ export class ServerFiltersComponent implements OnInit {
     }
 
     ngOnInit() {
+        /**
+         * Initialize form group with default values
+         */
         this.filtersForm = this.fb.group({
+            storage: [[0, 73728]],
             ram: this.fb.array([]),
             hdd: [null],
             location: [null],
         });
 
-        this.filtersForm.valueChanges.subscribe((val: ApplyFiltersParameters) => {
-            console.log(val);
+        /**
+         * Subscribe to state, when filterOptions are available, initialize filters. This is done only once.
+         */
+        this.store
+            .select(state => state['serverList'])
+            .pipe(
+                filter((state: ServerListState) => !!state.filtersOptions),
+                take(1)
+            )
+            .subscribe((state: ServerListState) => {
+                this.filtersOptions = state.filtersOptions;
 
-            // Format RAM filters values to be usable (from true/false to selected sizes)
+                // Add ram controls to filtersForm.ram FormArray
+                const ramFa = this.filtersForm.get('ram') as FormArray;
+                state.filtersOptions.ram.forEach((v: number) => {
+                    ramFa.push(this.fb.control(false));
+                });
+
+                this.ready = true;
+            });
+
+        /**
+         * Subscribe to filtersForm changes. Apply some data transforms and dispatch an ApplyFilters action.
+         */
+        this.filtersForm.valueChanges.subscribe((val: ApplyFiltersParameters) => {
+            // Format storage filters
+            val.storage = {min: val.storage[0], max: val.storage[1]};
+
+            // Format RAM filters values to be usable (convert from true/false to selected sizes)
             val.ram = val.ram.reduce((acc, checked, idx) => {
                 if (checked) {
-                    acc.push(this.options.ram[idx]);
+                    acc.push(this.filtersOptions.ram[idx]);
                 }
                 return acc;
             }, []);
@@ -46,24 +99,5 @@ export class ServerFiltersComponent implements OnInit {
 
             this.store.dispatch(new ApplyFilters(val));
         });
-
-        this.store
-            .select(state => state['serverList'])
-            .pipe(
-                filter((state: ServerListState) => !!state.filtersOptions),
-                take(1)
-            )
-            .subscribe((state: ServerListState) => {
-                console.log(state);
-                this.options = state.filtersOptions;
-
-                // Add ram controls to filtersForm.ram FormArray
-                const fa = this.filtersForm.get('ram') as FormArray;
-                state.filtersOptions.ram.forEach((v: number) => {
-                    fa.push(this.fb.control(false));
-                });
-
-                this.ready = true;
-            });
     }
 }

@@ -1,39 +1,39 @@
 <form *ngIf="ready" [formGroup]="filtersForm">
     <div class="filter-container">
-        <h4>Storage</h4>
-
+        <div class="filterName">Storage</div>
+        <ng5-slider [options]="sliderOptions" formControlName="storage"></ng5-slider>
     </div>
 
     <div class="filter-container">
-        <label>RAM</label>
-
-        <div *ngFor="let size of filtersForm.get('ram').controls; let i = index;" class="form-check"
+        <div class="filterName">RAM</div>
+        <div *ngFor="let size of filtersForm.get('ram').controls; let i = index;"
+             class="form-check"
              formArrayName="ram"
         >
-            <input [formControlName]="i" [id]="'ram' + options.ram[i]" type="checkbox">
-            <label [attr.for]="'ram' + options.ram[i]" class="form-check-label">
-                {{options.ram[i]}} GB
+            <input [formControlName]="i" [id]="'ram' + filtersOptions.ram[i]" type="checkbox">
+            <label [attr.for]="'ram' + filtersOptions.ram[i]" class="form-check-label">
+                {{filtersOptions.ram[i]}} GB
             </label>
         </div>
     </div>
 
     <div class="filter-container">
-        <label for="hdd">HDD</label>
-        <select class="form-control" formControlName="hdd" id="hdd">
+        <div class="filterName">HDD</div>
+        <select class="form-control" formControlName="hdd">
             <option [ngValue]="null">Every type</option>
             <option
-                    *ngFor="let l of options.hdd"
+                    *ngFor="let l of filtersOptions.hdd"
                     [ngValue]="l"
             >{{l}}</option>
         </select>
     </div>
 
     <div class="filter-container">
-        <label for="location">Location</label>
-        <select class="form-control" formControlName="location" id="location">
+        <div class="filterName">Location</div>
+        <select class="form-control" formControlName="location">
             <option [ngValue]="null">Every location</option>
             <option
-                    *ngFor="let l of options.location"
+                    *ngFor="let l of filtersOptions.location"
                     [ngValue]="l"
             >{{l}}</option>
         </select>

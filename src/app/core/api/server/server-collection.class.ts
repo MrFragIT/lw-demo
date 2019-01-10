@@ -61,7 +61,7 @@ export class ServerCollection {
     }
 
     /**
-     * Extracts all possible storage filter options from the dataset, sorted ASC
+     * Extracts all possible storage filter filtersOptions from the dataset, sorted ASC
      * Remember, storage is expressd in GB!
      */
     getStorageFilterOptions(): number[] {
@@ -85,7 +85,7 @@ export class ServerCollection {
     }
 
     /**
-     * Extracts all possible RAM filter options from the dataset, sorted ASC
+     * Extracts all possible RAM filter filtersOptions from the dataset, sorted ASC
      */
     getRAMFilterOptions(): number[] {
         return this._servers.reduce((acc: number[], s: Server) => {
@@ -105,7 +105,7 @@ export class ServerCollection {
     }
 
     /**
-     * Extracts all possible HDD type filter options from the dataset, sorted ASC
+     * Extracts all possible HDD type filter filtersOptions from the dataset, sorted ASC
      */
     getHDDFilterOptions(): string[] {
         return this._servers.reduce((acc: string[], s: Server) => {
@@ -125,7 +125,7 @@ export class ServerCollection {
     }
 
     /**
-     * Extracts all possible LOCATION filter options from the dataset, sorted ASC
+     * Extracts all possible LOCATION filter filtersOptions from the dataset, sorted ASC
      */
     getLocationFilterOptions(): string[] {
         return this._servers.reduce((acc: string[], s: Server) => {
