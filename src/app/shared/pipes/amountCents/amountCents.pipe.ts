@@ -9,7 +9,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class AmountCentsPipe implements PipeTransform {
 
-    transform(value: number, args?: any): number {
+    transform(value: number): number {
         if (Number.isInteger(value)) {
             return value / 100;
         }
