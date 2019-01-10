@@ -1,7 +1,6 @@
 // import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-//
 // import {ServerListComponent} from './server-list.component';
-// import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+// import {NO_ERRORS_SCHEMA} from '@angular/core';
 //
 // describe('ServerListComponent', () => {
 //     let component: ServerListComponent;
@@ -9,7 +8,8 @@
 //
 //     beforeEach(async(() => {
 //         TestBed.configureTestingModule({
-//             declarations: [ServerListComponent]
+//             declarations: [ServerListComponent],
+//             schemas: [ NO_ERRORS_SCHEMA ]
 //         }).compileComponents();
 //     }));
 //

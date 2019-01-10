@@ -10,7 +10,8 @@ import {ServerCollection} from './server-collection.class';
  * Mocked data expected from server
  */
 const validUrl = 'http://assignment.ut3.nl:4300/api/servers';
-const validData: GetServerApiResponseInterface = JSON.parse(`{"servers":[{"model":"Dell R210Intel Xeon X3440","ram":{"memory":"16","unit":"GB","type":"DDR3"},"hdd":{"memory":"2","count":"2","unit":"TB","type":"SATA2"},"location":"AmsterdamAMS-01","price":{"currency":"EUR","currencySymbol":"€","amountCents":4999}}]}`);
+const validResponse: GetServerApiResponseInterface = JSON.parse(`{"servers":[{"model":"Dell R210Intel Xeon X3440","ram":{"memory":"16","unit":"GB","type":"DDR3"},"hdd":{"memory":"2","count":"2","unit":"TB","type":"SATA2"},"location":"AmsterdamAMS-01","price":{"currency":"EUR","currencySymbol":"€","amountCents":4999}}]}`);
+const emptyResponse: GetServerApiResponseInterface = JSON.parse(`{"servers":[]}`);
 
 
 describe('ServersApiService', () => {
@@ -48,13 +49,13 @@ describe('ServersApiService', () => {
         expect(getServersReq.request.method).toEqual('GET');
 
         // Send mocked valid data
-        getServersReq.flush(validData);
+        getServersReq.flush(validResponse);
     });
 
     it('should fetch an empty dataset and return an empty ServerCollection', () => {
         service.getServers().subscribe(out => {
             expect(out).toEqual(jasmine.any(ServerCollection));
-            expect(out.servers).toBe([]);
+            expect(out.servers).toEqual([]);
             expect(out.length).toBe(0);
         });
 
@@ -63,6 +64,6 @@ describe('ServersApiService', () => {
         expect(getServersReq.request.method).toEqual('GET');
 
         // Send empty response
-        getServersReq.flush([]);
+        getServersReq.flush(emptyResponse);
     });
 });
