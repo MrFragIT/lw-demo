@@ -5,8 +5,16 @@
     </div>
 
     <div class="filter-container">
-        <h4>RAM</h4>
+        <label>RAM</label>
 
+        <div *ngFor="let size of filtersForm.get('ram').controls; let i = index;" class="form-check"
+             formArrayName="ram"
+        >
+            <input [formControlName]="i" [id]="'ram' + options.ram[i]" type="checkbox">
+            <label [attr.for]="'ram' + options.ram[i]" class="form-check-label">
+                {{options.ram[i]}} GB
+            </label>
+        </div>
     </div>
 
     <div class="filter-container">
