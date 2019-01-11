@@ -61,17 +61,20 @@ export class ServerCollection {
     }
 
     /**
-     * Extracts all possible storage filter filtersOptions from the dataset, sorted ASC
+     * Extracts [min, max] storage values, to be used to limit storage filter.
      * Remember, storage is expressd in GB!
      */
-    getStorageFilterOptions(): number[] {
+    getStorageFilterLimits(): number[] {
         return this._servers.reduce((acc: number[], srv: Server) => {
             const v = srv.getTotalStorageGB();
-            if (!acc.includes(v)) {
-                acc.push(v);
+            if (acc[0] > v || acc[0] === 0) {
+                acc[0] = v;
+            }
+            if (acc[1] < v || acc[1] === 0) {
+                acc[1] = v;
             }
             return acc;
-        }, []).sort((a, b) => a - b);
+        }, [0, 0]);
     }
 
     /**

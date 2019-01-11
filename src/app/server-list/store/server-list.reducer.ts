@@ -19,7 +19,7 @@ export function ServerListReducer(
         case ServerListActionTypes.LoadServersSuccess:
             const servers = action.payload;
             const filtersOptions = {
-                storage: servers.getStorageFilterOptions(),
+                storage: servers.getStorageFilterLimits(),
                 ram: servers.getRAMFilterOptions(),
                 hdd: servers.getHDDFilterOptions(),
                 location: servers.getLocationFilterOptions()
