@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {FiltersOptions, ServerListState} from '../../store/server-list.state';
 import {CustomStepDefinition, Options} from 'ng5-slider';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {filter, take} from 'rxjs/operators';
 import {ApplyFilters} from '../../store/server-list.action';
 import {ApplyFiltersParameters} from '../../../core/api/server/server-collection.class';
@@ -49,16 +49,6 @@ export class ServerFiltersComponent implements OnInit {
 
     ngOnInit() {
         /**
-         * Initialize form group with default values
-         */
-        this.filtersForm = this.fb.group({
-            storage: [[0, 73728]],
-            ram: this.fb.array([]),
-            hdd: [null],
-            location: [null],
-        });
-
-        /**
          * Subscribe to state, when filterOptions are available, initialize filters. This is done only once.
          */
         this.store
@@ -69,15 +59,36 @@ export class ServerFiltersComponent implements OnInit {
             )
             .subscribe((state: ServerListState) => {
                 this.filtersOptions = state.filtersOptions;
-
-                // Add ram controls to filtersForm.ram FormArray
-                const ramFa = this.filtersForm.get('ram') as FormArray;
-                state.filtersOptions.ram.forEach((v: number) => {
-                    ramFa.push(this.fb.control(false));
-                });
-
-                this.ready = true;
+                this.initFilters();
             });
+    }
+
+    private initFilters() {
+        /**
+         * Adapt sliderOptions with new limits
+         */
+        const min = this.filtersOptions.storage[0];
+        const max = this.filtersOptions.storage[1];
+        this.sliderOptions.stepsArray = this.sliderOptions.stepsArray.filter(
+            (step, i) => {
+                return (step.value <= max) && (
+                    step.value >= min ||
+                    this.sliderOptions.stepsArray[i + 1] === undefined ||
+                    this.sliderOptions.stepsArray[i + 1].value > min
+                );
+            });
+        this.sliderOptions.floor = this.filtersOptions.storage[0];
+        this.sliderOptions.ceil = this.filtersOptions.storage[1];
+
+        /**
+         * Initialize form group with default values
+         */
+        this.filtersForm = this.fb.group({
+            storage: [this.filtersOptions.storage],
+            ram: this.fb.array(this.filtersOptions.ram.map(() => this.fb.control(false))),
+            hdd: [null],
+            location: [null],
+        });
 
         /**
          * Subscribe to filtersForm changes. Apply some data transforms and dispatch an ApplyFilters action.
@@ -99,5 +110,10 @@ export class ServerFiltersComponent implements OnInit {
 
             this.store.dispatch(new ApplyFilters(val));
         });
+
+        /**
+         * Setting ready state will make filters appear
+         */
+        this.ready = true;
     }
 }

@@ -15,11 +15,10 @@ export class ServerListComponent implements OnInit {
     constructor(
         private store: Store<ServerListState>
     ) {
+        this.state$ = this.store.select(state => state['serverList']);
     }
 
     ngOnInit() {
-        this.state$ = this.store.select(state => state['serverList']);
-
         // Load allServers
         this.store.dispatch(new LoadServersAction());
     }

@@ -25,6 +25,7 @@ export function ServerListReducer(
                 location: servers.getLocationFilterOptions()
             };
             return {
+                ready: true,
                 servers: servers,
                 serversCount: servers.length,
                 filteredServersCount: servers.length,
@@ -41,8 +42,8 @@ export function ServerListReducer(
          * In case of error, add errorMessage attribute
          */
         case ServerListActionTypes.LoadServersFailure:
-            // TODO: Implement me please!
             return {
+                ready: true,
                 errorMessage: action.payload.reason
             };
 

@@ -1,29 +1,40 @@
-<div class="row">
-    <div class="col-md-3">
-        <div class="sticky-top">
-            <app-server-filters></app-server-filters>
-        </div>
-    </div>
-
-    <div class="col-md-9">
-        <ng-container *ngIf="(state$ | async).servers;">
-            <ng-container *ngIf="(state$ | async).filteredServersCount; else noResults">
-                <div class="text-right">You are watching {{(state$ | async).filteredServersCount}}
-                    of {{(state$ | async).serversCount}} servers found.
+<div *ngIf="state$ | async as state;" class="row">
+    <ng-container *ngIf="state.ready; else loader">
+        <ng-container *ngIf="!state.errorMessage; else errorBox">
+            <div class="col-md-3">
+                <div class="sticky-top">
+                    <app-server-filters></app-server-filters>
                 </div>
-                <app-server
-                        *ngFor="let s of (state$ | async).servers.servers"
+            </div>
+
+            <div class="col-md-9">
+                <ng-container *ngIf="state.filteredServersCount; else noResults">
+                    <div class="text-right">Listing {{state.filteredServersCount}} of {{state.serversCount}} servers
+                        found.
+                    </div>
+                    <app-server
+                            *ngFor="let s of state.servers.servers"
                         [server]="s"
-                ></app-server>
-            </ng-container>
-            <ng-template #noResults>
-                <div class="">
-                    Sorry! No results matching your filter.
-                </div>
-            </ng-template>
+                    ></app-server>
+                </ng-container>
+                <ng-template #noResults>
+                    <app-error-box [message]="'Sorry! No results matching your filters.'"></app-error-box>
+                </ng-template>
+            </div>
         </ng-container>
-    </div>
+        <ng-template #errorBox>
+            <div class="col-sm-12 text-center pt-5">
+                <app-error-box [message]="state.errorMessage"></app-error-box>
+            </div>
+        </ng-template>
+    </ng-container>
+    <ng-template #loader>
+        <div class="col-sm-12 text-center pt-5">
+            <div class="container-center">
+                <app-loader></app-loader>
+            </div>
+        </div>
+    </ng-template>
 </div>
-
 
 

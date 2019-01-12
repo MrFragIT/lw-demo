@@ -52,18 +52,15 @@ describe('ServersApiService', () => {
         getServersReq.flush(validResponse);
     });
 
-    it('should fetch an empty dataset and return an empty ServerCollection', () => {
-        service.getServers().subscribe(out => {
-            expect(out).toEqual(jasmine.any(ServerCollection));
-            expect(out.servers).toEqual([]);
-            expect(out.length).toBe(0);
-        });
-
-        // Assert that a GET call to validUrl is made
-        const getServersReq = httpTestingController.expectOne(validUrl);
-        expect(getServersReq.request.method).toEqual('GET');
+    it('should throw an exception if fetched dataset is empty', () => {
+        service.getServers().subscribe(
+            null,
+            (err) => {
+                expect(err.message).toBe('No results from server.');
+            });
 
         // Send empty response
+        const getServersReq = httpTestingController.expectOne(validUrl);
         getServersReq.flush(emptyResponse);
     });
 });

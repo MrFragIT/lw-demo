@@ -19,7 +19,7 @@ export class ServerListEffects {
         mergeMap(
             () => this.serverApi.getServers().pipe(
                 map(servers => new LoadServersSuccessAction(servers)),
-                catchError((err) => of(new LoadServersFailureAction({reason: err})))
+                catchError((err) => of(new LoadServersFailureAction({reason: err.message})))
             )
         )
     );

@@ -22,7 +22,12 @@ export class ServersApiService extends ApiService {
      */
     getServers(): Observable<ServerCollection> {
         return this.http.get<GetServerApiResponseInterface>(this.getEndpoint('servers')).pipe(
-            map(({servers}) => new ServerCollection(servers.map((s: ServerApiInterface) => new Server(s))))
+            map(({servers}) => {
+                if (servers.length === 0) {
+                    throw new Error(`No results from server.`);
+                }
+                return new ServerCollection(servers.map((s: ServerApiInterface) => new Server(s)));
+            })
         );
     }
 }
