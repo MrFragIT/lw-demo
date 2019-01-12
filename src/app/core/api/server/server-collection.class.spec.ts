@@ -1,6 +1,6 @@
 /* tslint:disable */
 import {GetServerApiResponseInterface} from './servers-api.interface';
-import {ServerCollection} from './server-collection.class';
+import {ApplyFiltersParameters, ServerCollection} from './server-collection.class';
 import {Server} from './server.class';
 
 const validData: GetServerApiResponseInterface = JSON.parse(`{"servers":[
@@ -71,8 +71,28 @@ describe('ServerCollectionClass', () => {
     });
 
     it('Should filter by location', () => {
-        collection.applyHddFilter('Loc-02');
+        collection.applyLocationFilter('LOC-02');
         expect(collection.length).toEqual(1);
         expect(collection.servers[0].model).toBe('Test4');
+    });
+
+    it('Should reset the collection', () => {
+        collection.applyRamFilter([32]);
+        expect(collection.length).toBeLessThan(5);  // Just to make sure something has been filtered
+        collection.reset();
+        expect(collection.length).toEqual(5);
+    });
+
+    it('Should apply many filters in a single call', () => {
+        const filterParams: ApplyFiltersParameters = {
+            storage: {min: 1024, max: 4096},
+            ram: [16],
+            hdd: 'SSD',
+            location: 'LOC-02'
+        };
+        collection.applyFilters(filterParams);
+        // Test4 should be the only server matching all those filters
+        expect(collection.length).toEqual(1);
+        expect(collection.servers[0].model).toEqual('Test4');
     });
 });
