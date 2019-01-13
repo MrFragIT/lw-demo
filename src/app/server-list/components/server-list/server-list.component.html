@@ -23,8 +23,10 @@
             </div>
         </ng-container>
         <ng-template #errorBox>
-            <div class="col-sm-12 text-center pt-5">
-                <app-error-box [message]="state.errorMessage"></app-error-box>
+            <div class="col-sm-12" style="margin-top: 50px;">
+                <div class="container-center">
+                    <app-error-box [message]="state.errorMessage"></app-error-box>
+                </div>
             </div>
         </ng-template>
     </ng-container>
