@@ -30,12 +30,7 @@ export function ServerListReducer(
                 serversCount: servers.length,
                 filteredServersCount: servers.length,
                 filtersOptions,
-                filtersValues: {
-                    storage: {
-                        min: filtersOptions.storage[0],
-                        max: filtersOptions.storage[filtersOptions.storage.length - 1]
-                    }
-                }
+                filtersValues: {}
             };
 
         /**

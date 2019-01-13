@@ -9,7 +9,7 @@ import {ServerListReducer} from '../../store/server-list.reducer';
 import {GetServerApiResponseInterface} from '../../../core/api/server/servers-api.interface';
 import {Server} from '../../../core/api/server/server.class';
 import {ServerCollection} from '../../../core/api/server/server-collection.class';
-import {ApplyFilters, LoadServersSuccessAction} from '../../store/server-list.action';
+import {ApplyFiltersAction, LoadServersSuccessAction} from '../../store/server-list.action';
 import {ServerListState} from '../../store/server-list.state';
 
 const validResponse: GetServerApiResponseInterface = JSON.parse(`{"servers":[
@@ -65,14 +65,14 @@ describe('ServerFiltersComponent', () => {
         expect(component.ready).toEqual(true);
     });
 
-    it('should dispatch ApplyFilters witch correct values when filters are set', () => {
+    it('should dispatch ApplyFiltersAction witch correct values when filters are set', () => {
         const expectedPayload = {
             storage: {min: 100, max: 200},
             ram: [32],
             hdd: 'SSD',
             location: 'LOC-02'
         };
-        const action = new ApplyFilters(expectedPayload);
+        const action = new ApplyFiltersAction(expectedPayload);
         const servers = validResponse.servers.map(s => new Server(s));
         const collection = new ServerCollection(servers);
 

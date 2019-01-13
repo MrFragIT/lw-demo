@@ -4,7 +4,7 @@ import {FiltersOptions, ServerListState} from '../../store/server-list.state';
 import {CustomStepDefinition, Options} from 'ng5-slider';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {filter, take} from 'rxjs/operators';
-import {ApplyFilters} from '../../store/server-list.action';
+import {ApplyFiltersAction} from '../../store/server-list.action';
 import {ApplyFiltersParameters} from '../../../core/api/server/server-collection.class';
 
 /**
@@ -91,7 +91,7 @@ export class ServerFiltersComponent implements OnInit {
         });
 
         /**
-         * Subscribe to filtersForm changes. Apply some data transforms and dispatch an ApplyFilters action.
+         * Subscribe to filtersForm changes. Apply some data transforms and dispatch an ApplyFiltersAction action.
          */
         this.filtersForm.valueChanges.subscribe((val: ApplyFiltersParameters) => {
             // Format storage filters
@@ -108,7 +108,7 @@ export class ServerFiltersComponent implements OnInit {
                 val.ram = null; // I must convert it to NULL or I will filter out everything!
             }
 
-            this.store.dispatch(new ApplyFilters(val));
+            this.store.dispatch(new ApplyFiltersAction(val));
         });
 
         /**

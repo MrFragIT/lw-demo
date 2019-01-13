@@ -26,7 +26,7 @@ export class LoadServersFailureAction implements Action {
     }
 }
 
-export class ApplyFilters implements Action {
+export class ApplyFiltersAction implements Action {
     readonly type = ServerListActionTypes.ApplyFilters;
 
     constructor(public payload: ApplyFiltersParameters) {
@@ -37,4 +37,4 @@ export type Union =
     LoadServersAction
     | LoadServersSuccessAction
     | LoadServersFailureAction
-    | ApplyFilters;
+    | ApplyFiltersAction;
